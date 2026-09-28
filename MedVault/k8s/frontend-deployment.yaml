@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: medvault-frontend:latest
+          image: sachintribhuvan80/medvault-frontend:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
