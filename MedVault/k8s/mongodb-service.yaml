@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service
+  namespace: medvault
+spec:
+  clusterIP: None        # headless, used by the StatefulSet
+  selector:
+    app: mongodb
+  ports:
+    - port: 27017
+      targetPort: 27017

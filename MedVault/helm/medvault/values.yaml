@@ -1,0 +1,44 @@
+namespace:
+  create: true
+  name: medvault
+
+environment:
+  nodeEnv: production
+  corsOrigin: "*"
+  autoSeed: "true"
+
+frontend:
+  image:
+    repository: medvault-frontend      # e.g. YOUR_DOCKERHUB_USERNAME/medvault-frontend
+    tag: latest
+    pullPolicy: IfNotPresent
+  replicas: 1
+  apiUrl: /api                         # browser-visible API URL (runtime config); "/api" = same-origin proxy
+  service:
+    type: NodePort                     # LoadBalancer on AWS
+    port: 80
+    nodePort: 30080                    # ignored for LoadBalancer/ClusterIP
+
+backend:
+  image:
+    repository: medvault-backend       # e.g. YOUR_DOCKERHUB_USERNAME/medvault-backend
+    tag: latest
+    pullPolicy: IfNotPresent
+  replicas: 1
+  port: 5000
+  service:
+    type: ClusterIP
+    port: 5000
+
+mongodb:
+  image:
+    repository: mongo
+    tag: "7"
+  port: 27017
+  database: medvault
+  auth:
+    username: medvault
+    password: change-me-dev-only       # override: --set mongodb.auth.password=...
+  persistence:
+    size: 1Gi
+    storageClass: ""

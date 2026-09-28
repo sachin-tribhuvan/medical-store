@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: medvault
+spec:
+  type: NodePort          # change to LoadBalancer on AWS (drop nodePort)
+  selector:
+    app: frontend
+  ports:
+    - port: 80
+      targetPort: 8080
+      nodePort: 30080

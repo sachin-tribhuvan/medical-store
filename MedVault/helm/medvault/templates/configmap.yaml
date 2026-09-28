@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: medvault-config
+  namespace: {{ include "medvault.namespace" . }}
+  labels:
+    {{- include "medvault.labels" . | nindent 4 }}
+data:
+  NODE_ENV: {{ .Values.environment.nodeEnv | quote }}
+  PORT: {{ .Values.backend.port | quote }}
+  CORS_ORIGIN: {{ .Values.environment.corsOrigin | quote }}
+  AUTO_SEED: {{ .Values.environment.autoSeed | quote }}
+  API_URL: {{ .Values.frontend.apiUrl | quote }}
+  BACKEND_UPSTREAM: {{ printf "backend-service:%v" .Values.backend.service.port | quote }}
